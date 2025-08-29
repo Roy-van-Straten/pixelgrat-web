@@ -1,0 +1,36 @@
+{
+  "name": "pixelgrat-web",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Roy-van-Straten/pixelgrat-web.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Roy-van-Straten/pixelgrat-web/issues"
+  },
+  "homepage": "https://github.com/Roy-van-Straten/pixelgrat-web#readme",
+  "description": "",
+  "devDependencies": {
+    "@types/jest": "^30.0.0",
+    "eslint": "^9.34.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.4",
+    "jest": "^30.1.1",
+    "prettier": "^3.6.2",
+    "ts-jest": "^29.4.1",
+    "vite": "^7.1.3"
+  },
+  "dependencies": {
+    "phaser": "^3.90.0"
+  }
+}
