@@ -2,6 +2,9 @@
 
 This document breaks down the todo list into small, actionable steps for secure, step-by-step implementation.
 
+## Priority Board
+- HIGH: Mobile Compatibility — implement before other Phase 2+ work. See "Phase 1.5 – Mobile Compatibility" below.
+
 ---
 
 ## Phase 0 – Repo Setup
@@ -26,6 +29,7 @@ This document breaks down the todo list into small, actionable steps for secure,
 9. ✅ Add .eslintrc.cjs
 10. ✅ Add .prettierrc
 11. ✅ Create README.md stub
+12. Mobile optimization: include viewport meta with viewport-fit, safe-area CSS, disable default gestures (touch-action), and plan device test matrix.
 
 ---
 
@@ -45,18 +49,30 @@ This document breaks down the todo list into small, actionable steps for secure,
 12. ✅ Camera follows player
 13. ✅ Clamp camera to map bounds
 14. ✅ Collision with walls, obstacles, interactables
+15. Mobile optimization: verify Boot/Preload/MainMenu/Play scenes scale with FIT + autoCenter; ensure touch input enabled and pointer events do not scroll/zoom.
 ---
+
+## Phase 1.5 – Mobile Compatibility [HIGH PRIORITY]
+### Steps
+1. ✅ Responsive layout: ensure game canvas and UI scale for mobile screens (portrait/landscape).
+2. ✅ Touch controls: add on-screen joystick/buttons for movement, actions, inventory.
+3. ✅ Mobile-friendly menus: increase button size, spacing, and font for touch usability.
+4. Test and fix: verify on iOS/Android browsers; address any input or layout bugs.
+5. Optimize performance: reduce asset sizes, tune effects for mobile hardware.
+6. ✅ Add mobile detection: auto-switch controls/UI when touch device detected.
+7. Document mobile support in README and add screenshots.
+8. ✅ Mobile optimization: adapt controls per orientation (portrait/landscape), ensure safe-area margins (notch), provide left-handed layout toggle, and support pinch-to-zoom with clamped limits.
 
 ## Phase 2 – Core Systems
 ### Steps
-1. Create `systems/tilemap/Grid.ts`: tile size constant, world-to-tile helpers, AABB → tiles.
-2. Create `systems/dungeon/types.ts`: Room, Corridor, Door, Trap, Secret types; `DungeonConfig`.
-3. Create `systems/dungeon/PRNG.ts`: seedable RNG (Mulberry32) with `seed` param.
+1. ✅ Create `systems/tilemap/Grid.ts`: tile size constant, world-to-tile helpers, AABB → tiles.
+2. ✅ Create `systems/dungeon/types.ts`: Room, Corridor, Door, Trap, Secret types; `DungeonConfig`.
+3. ✅ Create `systems/dungeon/PRNG.ts`: seedable RNG (Mulberry32) with `seed` param.
 4. Create `systems/dungeon/Generator.ts`: generate rooms (random rects), connect corridors (MST), place start/boss rooms.
 5. Add door placement: locked door before boss; key placement in non-dead-end room.
-6. Convert generator output → render data: floor/wall tiles, door tiles, spawn points.
+6. ✅ Convert generator output → render data: floor/wall tiles, door tiles, spawn points.
 7. Scene transitions scaffold: add `scenes/HubScene.ts` stub; from MainMenu → Hub → Dungeon.
-8. Collision mapping: mark wall tiles as collidable; create physics static bodies from tiles.
+8. ✅ Collision mapping: mark wall tiles as collidable; create physics static bodies from tiles.
 9. Trap system base: `systems/traps/index.ts` with enum (Spike, Gas, Plate), common interface (activate, tick, render).
 10. Implement Spike trap: periodic pop-up damage; render as animated tile.
 11. Implement Gas trap: area hazard with DoT; render puffs; configurable radius.
@@ -66,6 +82,7 @@ This document breaks down the todo list into small, actionable steps for secure,
 15. Debug overlay: toggle (F1) to show seed, FPS, player coords, room bounds, door/secret markers.
 16. Input mapping constants: centralize keys in `systems/input/keys.ts`.
 17. Error boundaries: safe-guard for missing assets/scenes with console warning, no crash.
+18. Mobile optimization: adhere to mobile budgets (tiles/particles capped), avoid heavy per-frame allocations, and keep debug overlay optional/toggleable.
 
 ---
 
@@ -84,6 +101,7 @@ This document breaks down the todo list into small, actionable steps for secure,
 11. Hook Player to equipment: update move speed/defense when gear changes.
 12. Sandbox: spawn basic items via debug button to test inventory/equip.
 13. Minimal save/load tie-in: persist `PlayerState` on scene switch (using Phase 5 storage API once ready).
+14. Mobile optimization: ensure inventory/equipment UI is touch-friendly (bigger hit targets, drag thresholds) and supports portrait/landscape layouts.
 
 ---
 
@@ -107,6 +125,7 @@ This document breaks down the todo list into small, actionable steps for secure,
 12. Victory: drop chest + exit portal; Defeat: respawn at Hub with item durability loss (placeholder).
 13. Transition: return to `HubScene` after clear; summary screen (time, loot, secrets found).
 14. Optional turn-based stub: create `scenes/BattleScene.ts` with initiative order and Attack/Defend/Item/Flee.
+15. Mobile optimization: tune enemy counts/effects for mobile, add on-screen action/interact mappings, and keep combat readable at portrait zoom.
 
 ---
 
@@ -120,6 +139,7 @@ This document breaks down the todo list into small, actionable steps for secure,
 6. Server stubs in `/server`: define REST shapes (save, load, list). No network yet—return mock data.
 7. API client `systems/api/client.ts`: fetch wrappers with timeout, retry, and abort controller (future use).
 8. Wire Phase 3/4 systems to call storage API at appropriate points.
+9. Mobile optimization: perform saves in background (debounced), avoid blocking UI; show non-intrusive toasts sized for touch.
 
 ---
 
@@ -133,6 +153,7 @@ This document breaks down the todo list into small, actionable steps for secure,
 6. Event emitters: game posts PG_EVENT on key milestones (dungeon_clear, level_up, achievement).
 7. Create `examples/parent-iframe-demo/index.html`: iframe embed, message console, send buttons.
 8. Security: ignore messages from unknown origins; include source validation in bridge.
+9. Mobile optimization: ensure iframe embeds propagate viewport/meta correctly and that touch input isn’t intercepted by parent page.
 
 ---
 
@@ -147,6 +168,7 @@ This document breaks down the todo list into small, actionable steps for secure,
 7. Messaging tests: validate message shapes and handshake flow.
 8. CI: add `.github/workflows/ci.yml` (lint → test → build), cache node_modules.
 9. Docs: update README with architecture, systems overview, messaging API, and run instructions.
+10. Mobile optimization: add device smoke tests (portrait/landscape), FPS budget checks, and a manual test checklist.
 
 ---
 
@@ -160,3 +182,5 @@ This document breaks down the todo list into small, actionable steps for secure,
 6. UI polish: consistent pixel-font, hover states, button sounds, screen transitions (fade from/to black).
 7. Performance pass: cap particle counts; throttle fog updates; pool projectiles.
 8. Visualize dungeon debug: draw room/corridor overlays and trap/enemy markers with F1 toggle.
+9. Mobile optimization: add adaptive HUD for portrait vs. landscape, ensure controls never overlap HUD, and provide left-handed layout option.
+---
